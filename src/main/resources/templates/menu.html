@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Pizza Menu</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+    <div class="w-3/4 my-0" >
+      <div class="w-11/12 flex flex-wrap order-4" id="foodMenu">
+        <div class="flex flex-col border-2 rounded shadow w-80 px-2 py-3 m-1">
+          <h2 class="font-medium text-3xl">Cheese pizza</h2>
+          <p class="text-lg mt-1">This is a wonderful cheese pizza ever</p>
+          <select class="border-2 mt-2">
+            <option>
+              <p>XL</p>
+              <p>25 000</p>
+            </option>
+            <option>
+              <p >XL</p>
+              <p>25 000</p>
+            </option>
+          </select>
+          <button class="mt-2 border-2 rounded-lg bg-green-300">CHỌN</button>
+        </div>
+    <script>
+      $(document).ready(function(){
+        //const data=[];
+        $.ajax({
+        url:"http://localhost:8080/menu",
+        success:function(result){
+          console.log(result);
+          result.forEach((food) => {
+            let newDiv=$('<div class="flex flex-col border-2 rounded shadow w-80 px-2 py-3 m-1">');
+            newDiv.append('<h2 class="font-medium text-3xl">'+food.name+'</h2>');
+            newDiv.append('<p class="text-lg mt-1">'+food.description+'</p>');
+            let newSelect=$('<select class="border-2 mt-2">');
+            Object.entries(food.prices).forEach(([size,price])=>{
+              newSelect.append('<option><p>'+size+'</p><p>'+price+'</p></option>');
+            });
+            newDiv.append(newSelect);
+            newDiv.append('<button class="mt-2 border-2 rounded-lg bg-green-300">CHỌN</button>');
+
+
+            $('#foodMenu').append(newDiv);
+          });
+          
+        }
+       });
+      });
+      //console.log(data);
+    </script>
+  </body>
+</html>
